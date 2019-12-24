@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/sign-up',[
+    'uses'=> 'AuthController@create_user'
+]);
+
+
+Route::post('/login',[
+    'uses'=> 'AuthController@login'
+]);

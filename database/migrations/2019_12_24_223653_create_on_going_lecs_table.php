@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateOnGoingLecsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('on_going_lecs', function (Blueprint $table) {
             $table->string('id')->unique();
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->string('imei_number');
-            $table->string('nsbm_id');
-            $table->integer('role');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->string('module_code');
+            $table->string('lec_hall_id');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('on_going_lecs');
     }
 }

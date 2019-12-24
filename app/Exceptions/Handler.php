@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+//use App\Exceptions\ExceptionTrait;
 
 class Handler extends ExceptionHandler
 {
@@ -12,6 +13,9 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
+
+     use ExceptionTrait;
+
     protected $dontReport = [
         //
     ];
@@ -46,6 +50,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        
+        return $this->user_already_exists($request,$exception);
+        //return parent::render($request, $exception);
     }
 }
