@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Colombo', // I am using this in India',
 
     /*
     |--------------------------------------------------------------------------

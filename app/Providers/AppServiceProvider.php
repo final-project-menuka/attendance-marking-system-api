@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\UserService;
+use App\Services\AuthService;
+use App\User;
+use App\Services\StudentService;
+use App\OnGoingLec;
+use App\StudentAttendance;
+use App\Students;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,8 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(UserService::class,function(){
-            return new UserService;
+        $this->app->singleton(AuthService::class,function(){
+            return new AuthService(new User());
+        });
+        $this->app->singleton(StudentService::class,function(){
+            return new StudentService(new User(),new OnGoingLec(),new StudentAttendance(),new Students());
         });
     }
 

@@ -5,6 +5,10 @@ use App\Exceptions\ExceptionModels;
 use Illuminate\Http\Response;
 
 trait ExceptionTrait{
+    /**
+     * Application Exceptions Handled By This Method
+     * 
+     */
     public function user_already_exists($request,$exception){
         if($exception->getMessage() === ExceptionModels::USER_EXISTS ){
             return response()->json([
@@ -26,6 +30,21 @@ trait ExceptionTrait{
                 'MESSAGE'=>"PLEASE_CHECK_ID_OR_IMEI",
                 'CODE'=>$exception->getMessage()
             ],404);
+        }elseif($exception->getMessage() === ExceptionModels::PRESENTED_LECTURE){
+            return response()->json([
+                'MESSAGE'=>"YOU_ARE_IN_THE_LECTURE_HALL_PLEASE_TRY_AGAIN",
+                'CODE'=>$exception->getMessage()
+            ],409);
+        }elseif($exception->getMessage() === ExceptionModels::MAC_ADDRESS_NOT_EXISTS){
+            return response()->json([
+                'MESSAGE'=>"MAC_ADDRESS_NOT_FOUND",
+                'CODE'=>$exception->getMessage()
+            ],404);
+        }elseif($exception->getMessage() === ExceptionModels::YOU_ARE_NOT_A_VALIED_STUDENT){
+            return response()->json([
+                'MESSAGE'=>"YOU_ARE_NOT_A_STUDENT_OF_NSBM_STUDENT",
+                'CODE'=>$exception->getMessage()
+            ],401);
         }
     }
 }

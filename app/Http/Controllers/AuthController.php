@@ -4,39 +4,26 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Services\UserService;
+use App\Services\AuthService;
 
+/**
+ * All Authentication Requests Catch By This Controller
+ */
 class AuthController extends Controller
 {
 
-    private $userService;
+    private $auth_service;
 
-    public function __construct(UserService $userService){
-        $this->userService = $userService;
-    }
-    /**
-     * 
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct(AuthService $auth_service){
+        $this->auth_service = $auth_service;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Student's Login Request Will Come To Here
+     * Post Request
      */
-    public function create_user(Request $request)
-    {
-        return $this->userService->new_user($request);
-    }
-
     public function login(Request $request){
-        return $this->userService->login($request);
+        return $this->auth_service->login($request);
     }
     
 }

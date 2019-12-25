@@ -17,11 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/sign-up',[
-    'uses'=> 'AuthController@create_user'
+Route::post('/student/sign-up',[
+    'uses'=> 'StudentController@new_student'
 ]);
-
+Route::post('/student/mark-attendence',[
+    'uses'=>'StudentController@mark_attendence'
+]);
 
 Route::post('/login',[
     'uses'=> 'AuthController@login'
 ]);
+
+// Route::fallback(function(){
+//     return response()->json(['message' => 'Not Found.'], 404);
+// })->name('api.fallback.404');

@@ -19,6 +19,10 @@ class CreateOnGoingLecsTable extends Migration
             $table->dateTime('end_time');
             $table->string('module_code');
             $table->string('lec_hall_id');
+            $table->string('lec_hall_number');
+            $table->string('mac_address');
+            $table->decimal('batch');
+            $table->string('course');
             $table->date('date');
             $table->timestamps();
         });
