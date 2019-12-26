@@ -45,6 +45,11 @@ trait ExceptionTrait{
                 'MESSAGE'=>"YOU_ARE_NOT_A_STUDENT_OF_NSBM_STUDENT",
                 'CODE'=>$exception->getMessage()
             ],401);
+        }else{
+            return response()->json([
+                'MESSAGE'=>"SOMETHING_WENT_WRONG",
+                'CODE'=>'SOMETHING_WENT_WRONG'
+            ],500);
         }
     }
 }
