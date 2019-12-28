@@ -23,6 +23,12 @@ Route::post('/student/sign-up',[
 Route::post('/student/mark-attendence',[
     'uses'=>'StudentController@mark_attendence'
 ]);
+Route::post('/student/check',[
+    'uses'=>'StudentController@check_student_available'
+]);
+Route::post('/student/rollback-attendance',[
+    'uses'=> 'StudentController@update_attendance_status'
+]);
 
 Route::post('/login',[
     'uses'=> 'AuthController@login'

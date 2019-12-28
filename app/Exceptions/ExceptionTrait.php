@@ -45,6 +45,12 @@ trait ExceptionTrait{
                 'MESSAGE'=>"YOU_ARE_NOT_A_STUDENT_OF_NSBM_STUDENT",
                 'CODE'=>$exception->getMessage()
             ],401);
+        }
+        elseif($exception->getMessage() === ExceptionModels::LEFT_EARLY){
+            return response()->json([
+                'MESSAGE'=>"STUDENT_LEFT_EARLY",
+                'CODE'=>$exception->getMessage()
+            ],401);
         }else{
             return response()->json([
                 'MESSAGE'=>"SOMETHING_WENT_WRONG",

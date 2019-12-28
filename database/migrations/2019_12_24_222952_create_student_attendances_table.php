@@ -21,6 +21,9 @@ class CreateStudentAttendancesTable extends Migration
             $table->string('lec_hall_id');
             $table->string('lec_hall_num');
             $table->string('student_name');
+            $table->string('mac_address');
+            $table->tinyInteger('late');
+            $table->tinyInteger('half_leave')->default(0);
             $table->timestamps();
         });
     }

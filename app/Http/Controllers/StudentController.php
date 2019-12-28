@@ -34,4 +34,12 @@ class StudentController extends Controller
     public function mark_attendence(Request $request){
         return $this->student_service->mark_attendance($request);
     }
+
+    public function check_student_available(Request $request){
+        return $this->student_service->check_student_in_lecture($request);
+    }
+    public function update_attendance_status(Request $request)
+    {
+        return $this->student_service->update_attendance_status($request);
+    }
 }
