@@ -29,6 +29,9 @@ Route::post('/student/check',[
 Route::post('/student/rollback-attendance',[
     'uses'=> 'StudentController@update_attendance_status'
 ]);
+Route::get('/student/today-time-table',[
+    'uses'=>'StudentController@get_time_table'
+]);
 
 Route::post('/login',[
     'uses'=> 'AuthController@login'

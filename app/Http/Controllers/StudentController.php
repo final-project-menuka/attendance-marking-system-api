@@ -42,4 +42,8 @@ class StudentController extends Controller
     {
         return $this->student_service->update_attendance_status($request);
     }
+    public function get_time_table(Request $request)
+    {
+        return $this->student_service->get_time_table();
+    }
 }

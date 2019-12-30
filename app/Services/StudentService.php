@@ -68,7 +68,7 @@ class StudentService
             ->where('mac_address',$request->input('macAddress'))->first();
             if(!empty($on_going_lecture)){
                 $attendence = $this->student_attendence::where('module_code',$on_going_lecture['module_code'])
-                ->where('student_id','=',$request->input('id'))->where('attended_time','<=',$on_going_lecture['end_time'])->first();
+                ->where('student_id','=',$request->input('id'))->where('attended_time','>=',$on_going_lecture['start_time'])->where('attended_time','<=',$on_going_lecture['end_time'])->first();
                 if(empty($attendence)){
                     $this->student_attendence->attended_time = date('Y-m-d H:i:s');
                     $this->student_attendence->student_id = $request->input('id');
@@ -123,6 +123,18 @@ class StudentService
             ->where('module_code',$request->input('moduleCode'))->where('date',date('Y-m-d'))->update(['half_leave'=>0]),200);
         }else{
             throw new \Exception(ExceptionModels::LEC_HALL_NOT_FOUND);
+        }
+    }
+
+    public function get_time_table()
+    {
+        //response()->json('ok',200);
+        $today_lecs = $this->on_going_lec::where('date',date('Y-m-d'))->get();
+        if(sizeof($today_lecs) > 0){
+            return response()->json($today_lecs,200);
+        }
+        else{
+            throw new \Exception(ExceptionModels::TODAY_NO_LECTURES);
         }
     }
 }

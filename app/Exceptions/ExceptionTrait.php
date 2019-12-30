@@ -51,7 +51,14 @@ trait ExceptionTrait{
                 'MESSAGE'=>"STUDENT_LEFT_EARLY",
                 'CODE'=>$exception->getMessage()
             ],401);
-        }else{
+        }
+        elseif($exception->getMessage() === ExceptionModels::TODAY_NO_LECTURES){
+            return \response()->json([
+                'MESSAGE'=>'TODAY_IS_A_HOLIDAY',
+                'CODE'=>$exception->getMessage()
+            ],400);
+        }
+        else{
             return response()->json([
                 'MESSAGE'=>"SOMETHING_WENT_WRONG",
                 'CODE'=>'SOMETHING_WENT_WRONG'
