@@ -92,7 +92,7 @@ class StudentService
         }
     }
     /**
-     * check student available at lecture
+     * check student available at lecture post request
      */
     public function check_student_in_lecture($request)
     {
