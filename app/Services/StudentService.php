@@ -98,14 +98,9 @@ class StudentService
     {
         if(!empty($request->input('id')) && !empty($request->input('macAddress')))
         {
-            // $lecture = $this->student_attendence->join('on_going_lecs','student_attendances.lec_hall_num','on_going_lecs.lec_hall_number')
-            // ->where('student_attendances.mac_address','=',$request->input('macAddress'))->where('student_id','=',$request->input('id'))
-            // ->where('attended_time','<',date('Y-m_d H:i:s'))->first();
-            // $lecture = $this->student_attendence::where('attended_time','<',function($q){
-            //     $q->select('end_time')->from('on_going_lecs')->where('mac_address',$request->input('macAddress'));
-            // })->first();
-            $lecture = \DB::select("select * from student_attendances where attended_time < (select end_time from on_going_lecs where start_time <='".date('Y-m-d H:i:s')."' and mac_address = '".$request->input('macAddress')."' and end_time >= '".date('Y-m-d H:i:s')."') and student_id='".$request->input('id')."' and module_code = '".$request->input('moduleCode')."'");
-            if(!empty($lecture)){
+            $lecture = $this->student_attendence::where('date',date('Y-m-d'))->where('student_id',$request->input('id'))
+            ->where('module_code',$request->input('moduleCode'))->whereBetween('attended_time',array(date('Y-m-d H:i:s',strtotime('-2 hours')),date('Y-m-d H:i:s')))->first();
+            if(!empty($lecture) && $lecture['mac_address'] === $request->input('macAddress')){
                 return response()->json($lecture,200);
             }else{
                 $this->student_attendence::where('student_id',$request->input('id'))->where('module_code',$request->input('moduleCode'))
