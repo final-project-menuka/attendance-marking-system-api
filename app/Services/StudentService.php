@@ -104,7 +104,7 @@ class StudentService
                 return response()->json($lecture,200);
             }else{
                 $this->student_attendence::where('student_id',$request->input('id'))->where('module_code',$request->input('moduleCode'))
-                ->where('attended_time','<',date('Y-m-d H:i:s'))->update(['half_leave'=>1]);
+                ->where('attended_time','<',date('Y-m-d H:i:s'))->where('id',$lecture['id'])->update(['half_leave'=>1]);
                 throw new \Exception(ExceptionModels::LEFT_EARLY);
             }
         }
