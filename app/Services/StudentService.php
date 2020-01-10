@@ -103,8 +103,7 @@ class StudentService
             if(!empty($lecture) && $lecture['mac_address'] === $request->input('macAddress')){
                 return response()->json($lecture,200);
             }else{
-                $this->student_attendence::where('student_id',$request->input('id'))->where('module_code',$request->input('moduleCode'))
-                ->where('attended_time','<',date('Y-m-d H:i:s'))->where('id',$lecture['id'])->update(['half_leave'=>1]);
+                $this->student_attendence::where('id',$lecture['id'])->update(['half_leave'=>1]);
                 throw new \Exception(ExceptionModels::LEFT_EARLY);
             }
         }
@@ -112,12 +111,13 @@ class StudentService
 
     public function update_attendance_status($request)
     {
-        if(!empty($request->input('macAddress')) && !empty($request->input('id')) && !empty($request->input('moduleCode'))){
-            
-            return response()->json($this->student_attendence::where('student_id',$request->input('id'))->where('mac_address',$request->input('macAddress'))
-            ->where('module_code',$request->input('moduleCode'))->where('date',date('Y-m-d'))->update(['half_leave'=>0]),200);
+        $lecture = $this->student_attendence::where('date',date('Y-m-d'))->where('student_id',$request->input('id'))
+        ->where('module_code',$request->input('moduleCode'))->whereBetween('attended_time',array(date('Y-m-d H:i:s',strtotime('-130 minutes')),date('Y-m-d H:i:s')))->first();
+        if(!empty($lecture) && $lecture['mac_address'] === $request->input('macAddress')){
+            $this->student_attendence::where('id',$lecture['id'])->update(['half_leave'=>0]);
+            return response()->json($lecture,200);
         }else{
-            throw new \Exception(ExceptionModels::LEC_HALL_NOT_FOUND);
+            throw new \Exception(ExceptionModels::LEFT_EARLY);
         }
     }
 
@@ -125,6 +125,7 @@ class StudentService
     {
         //response()->json('ok',200);
         $today_lecs = $this->on_going_lec::where('date',date('Y-m-d'))->get();
+        //return response()->json('ok',200);
         if(sizeof($today_lecs) > 0){
             return response()->json($today_lecs,200);
         }
